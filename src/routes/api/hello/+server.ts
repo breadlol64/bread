@@ -1,5 +1,6 @@
 import { json } from "@sveltejs/kit";
+import type { RequestHandler } from "./$types";
 
-export function GET() {
+export const GET: RequestHandler = async () => {
     return json({ msg: "hello" });
-}
+};
