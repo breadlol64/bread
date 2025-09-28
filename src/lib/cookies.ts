@@ -1,4 +1,4 @@
-import { browser } from "$app/enviroment";
+import { browser } from "$app/environment";
 
 export function getCookie(name: string): string | null {
     if (!browser) return null;
