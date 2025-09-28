@@ -1,6 +1,6 @@
 import type { RequestHandler } from "./$types";
 import { json } from "@sveltejs/kit";
-import { randomBytes } from "crypto";
+import cryptoRandomString from "crypto-random-string";
 import nodemailer from "nodemailer";
 import { env } from "$env/dynamic/private";
 import { db } from "$lib/server/db";
@@ -23,7 +23,7 @@ export const POST: RequestHandler = async ({ request }) => {
     const [user] = await db.select().from(users).where(eq(users.id, userId));
     if (!user) return json({ error: "User not found" }, { status: 404 });
 
-    const token = randomBytes(32).toString("hex");
+    const token = cryptoRandomString({ length: 64, type: "hex" });
     const expiresAt = new Date(Date.now() + 1000 * 60 * 60);
 
     await db.insert(verificationTokens).values({ token, userId, expiresAt });
