@@ -1,4 +1,7 @@
+import { browser } from "$app/enviroment";
+
 export function getCookie(name: string): string | null {
+    if (!browser) return null;
     const match = document.cookie.match(
         new RegExp("(^| )" + name + "=([^;]+)")
     );
@@ -17,6 +20,7 @@ export function setCookie(
         sameSite?: "strict" | "lax" | "none";
     } = {}
 ) {
+    if (!browser) return;
     let cookieStr = `${name}=${encodeURIComponent(value)}`;
 
     if (options.path) cookieStr += `; path=${options.path}`;
